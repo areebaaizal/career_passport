@@ -1,0 +1,1 @@
+import {Router} from 'express';import {questions,submit,history} from '../controllers/quizController.js';import {protect} from '../middleware/auth.js';const r=Router();r.get('/questions',questions);r.post('/submit',protect,submit);r.get('/history',protect,history);export default r;

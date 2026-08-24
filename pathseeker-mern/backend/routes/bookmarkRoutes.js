@@ -1,0 +1,1 @@
+import {Router} from 'express';import {list,add,update,remove} from '../controllers/bookmarkController.js';import {protect} from '../middleware/auth.js';const r=Router();r.use(protect);r.get('/',list);r.post('/',add);r.put('/:id',update);r.delete('/:id',remove);export default r;

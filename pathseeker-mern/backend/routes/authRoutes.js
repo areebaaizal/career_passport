@@ -1,0 +1,1 @@
+import {Router} from 'express';import {register,login,profile} from '../controllers/authController.js';import {protect} from '../middleware/auth.js';const r=Router();r.post('/register',register);r.post('/login',login);r.put('/profile',protect,profile);export default r;

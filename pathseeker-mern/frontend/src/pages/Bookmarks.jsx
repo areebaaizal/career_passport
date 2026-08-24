@@ -1,0 +1,7 @@
+import {useEffect,useState} from 'react';
+import {Link} from 'react-router-dom';
+import {api} from '../services/api';
+export default function Bookmarks(){const [items,setItems]=useState([]);const [loading,setLoading]=useState(true);const [msg,setMsg]=useState('');
+useEffect(()=>{api.get('/bookmarks').then(r=>setItems(r.data||[])).catch(e=>setMsg(e.response?.data?.message||'Could not load bookmarks')).finally(()=>setLoading(false))},[]);
+const remove=async id=>{try{await api.delete(`/bookmarks/${id}`);setItems(items.filter(x=>x._id!==id))}catch(e){setMsg('Could not remove bookmark')}};
+return <main className="content-page"><div className="page-hero"><div><span className="eyebrow">YOUR SHORTLIST</span><h1>Saved for later.</h1><p>Keep your favorite career paths and resources in one place.</p></div><Link className="btn secondary" to="/careers">Explore careers →</Link></div>{msg&&<div className="alert">{msg}</div>}{loading?<div className="career-grid">{[1,2,3].map(x=><div className="skeleton" key={x}/>)}</div>:!items.length?<div className="empty card">You have no bookmarks yet. Save a career from the Career Bank.</div>:<div className="career-grid">{items.map(x=><article className="career-card" key={x._id}><span className="tag">{x.itemType||'Career'}</span><h2>{x.title||'Saved item'}</h2><p>{x.note||'Saved to your PathSeeker shortlist.'}</p><div className="card-link"><button className="text-button" onClick={()=>remove(x._id)}>Remove</button>{x.itemId&&<Link to={`/careers/${x.itemId}`}>Open →</Link>}</div></article>)}</div>}</main>}

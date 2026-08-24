@@ -1,0 +1,1 @@
+import {Router} from 'express';import {list,create,update,remove} from '../controllers/contentController.js';import {protect,adminOnly} from '../middleware/auth.js';const r=Router();r.get('/',list);r.post('/',protect,adminOnly,create);r.put('/:id',protect,adminOnly,update);r.delete('/:id',protect,adminOnly,remove);export default r;

@@ -1,0 +1,1 @@
+import {Router} from 'express';import {create,mine,all,respond} from '../controllers/feedbackController.js';import {protect,adminOnly} from '../middleware/auth.js';const r=Router();r.post('/',protect,create);r.get('/mine',protect,mine);r.get('/admin',protect,adminOnly,all);r.put('/:id/respond',protect,adminOnly,respond);export default r;
