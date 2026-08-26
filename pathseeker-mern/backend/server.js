@@ -22,7 +22,7 @@ const app=express();
 app.use(cors({origin:process.env.CLIENT_URL||'http://localhost:5173'})); app.use(express.json()); app.use('/uploads',express.static('uploads'));
 app.get('/api/health',(req,res)=>res.json({message:'PathSeeker API is running'}));
 app.use('/api/auth',authRoutes); app.use('/api/careers',careerRoutes); app.use('/api/quiz',quizRoutes);
-HEAD
+
 app.use('/api/bookmarks',bookmarkRoutes); app.use('/api/feedback',feedbackRoutes); app.use('/api/content',contentRoutes); app.use('/api/resources',resourceRoutes); app.use('/api/multimedia',multimediaRoutes); app.use('/api/admin',adminRoutes); app.use('/api/notifications',notificationRoutes); app.use('/api/stories',storyRoutes);
 
 app.use('/api/bookmarks',bookmarkRoutes); app.use('/api/feedback',feedbackRoutes); app.use('/api/content',contentRoutes); app.use('/api/admin',adminRoutes); app.use('/api/notifications',notificationRoutes); app.use('/api/stories',storyRoutes);
