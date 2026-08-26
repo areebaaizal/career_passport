@@ -2,14 +2,15 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { api } from '../services/api';
 
-export default function Resources() {
+export default function Multimedia() {
   const [params, setParams] = useSearchParams();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   const search = params.get('search') || '';
-  const tag = params.get('tag') || 'All';
+  const type = params.get('type') || 'All';
+  const category = params.get('category') || 'All';
 
   useEffect(() => {
     let active = true;
@@ -18,21 +19,22 @@ export default function Resources() {
       try {
         const q = new URLSearchParams();
         if (search) q.set('search', search);
-        if (tag !== 'All') q.set('tag', tag);
+        if (type !== 'All') q.set('type', type.toLowerCase());
+        if (category !== 'All') q.set('category', category);
 
-        const { data } = await api.get(`/resources?${q}`);
+        const { data } = await api.get(`/multimedia?${q}`);
         if (active) setItems(data || []);
       } catch (e) {
-        if (active) setError('Could not load resources.');
+        if (active) setError('Could not load videos and podcasts.');
       } finally {
         if (active) setLoading(false);
       }
     })();
     return () => (active = false);
-  }, [search, tag]);
+  }, [search, type, category]);
 
-  const tags = useMemo(
-    () => ['All', ...new Set(items.flatMap(x => x.tags || []))],
+  const categories = useMemo(
+    () => ['All', ...new Set(items.map(x => x.category).filter(Boolean))],
     [items]
   );
 
@@ -47,11 +49,11 @@ export default function Resources() {
     <main className="content-page">
       <div className="page-hero">
         <div>
-          <span className="eyebrow">LEARNING HUB</span>
-          <h1>Resources to move you forward.</h1>
-          <p>Guides, checklists and downloadable material to help you turn career ideas into action.</p>
+          <span className="eyebrow">MULTIMEDIA CENTER</span>
+          <h1>Watch and listen to real career journeys.</h1>
+          <p>Videos and podcasts from professionals to help you understand careers beyond the description.</p>
         </div>
-        <Link className="btn" to="/careers">Explore careers →</Link>
+        <Link className="btn" to="/success-stories">Read success stories →</Link>
       </div>
 
       <div className="searchbar">
@@ -59,22 +61,26 @@ export default function Resources() {
         <input
           value={search}
           onChange={e => update('search', e.target.value)}
-          placeholder="Search resources..."
+          placeholder="Search videos or podcasts..."
         />
         <button onClick={() => update('search', '')}>Clear</button>
       </div>
 
-      <div className="resource-tabs">
-        {tags.map(t => (
-          <span
+      <div className="filter-row">
+        <div className="filter-label">Type</div>
+        {['All', 'Video', 'Podcast'].map(t => (
+          <button
             key={t}
-            className={tag === t ? 'active' : ''}
-            onClick={() => update('tag', t)}
-            style={{ cursor: 'pointer' }}
+            className={type === t ? 'filter active' : 'filter'}
+            onClick={() => update('type', t)}
           >
             {t}
-          </span>
+          </button>
         ))}
+
+        <select value={category} onChange={e => update('category', e.target.value)}>
+          {categories.map(c => <option key={c}>{c}</option>)}
+        </select>
       </div>
 
       {error && <div className="alert error">{error}</div>}
@@ -84,20 +90,24 @@ export default function Resources() {
         {!loading && items.map(x => (
           <article className="resource-card" key={x._id}>
             <div className="resource-cover">
-              {(x.type || 'RESOURCE').toUpperCase()}
+              {x.type === 'podcast' ? '🎙' : '▶'}
               <span>↗</span>
             </div>
             <div className="resource-body">
-              <span className="tag">{x.category || 'Skill-building'}</span>
+              <span className="tag">{x.category || x.type}</span>
               <h2>{x.title}</h2>
-              <p>{x.description || 'Practical guidance for your career journey.'}</p>
-              <span className="muted small">{x.downloadCount || 0} downloads</span>
-              <Link className="card-link" to={`/resources/${x._id}`}>View resource <b>→</b></Link>
+              <p>{x.description || 'Watch or listen to learn more about this career path.'}</p>
+              <span className="muted small">
+                ⭐ {x.ratingAvg?.toFixed(1) || '0.0'} ({x.ratingCount || 0} ratings)
+              </span>
+              <Link className="card-link" to={`/multimedia/${x._id}`}>
+                {x.type === 'podcast' ? 'Listen now' : 'Watch now'} <b>→</b>
+              </Link>
             </div>
           </article>
         ))}
         {!loading && !items.length && (
-          <div className="empty wide">No resources found. Try a different search or tag.</div>
+          <div className="empty wide">No videos or podcasts found. Try a different search or filter.</div>
         )}
       </div>
     </main>
