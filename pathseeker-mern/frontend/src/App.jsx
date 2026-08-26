@@ -1,23 +1,6 @@
 import { Link,useLocation,useNavigate,Routes,Route } from 'react-router-dom';
 import { useEffect,useState } from 'react';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import Profile from './pages/Profile';
-import CareerBank from './pages/CareerBank';
-import CareerDetails from './pages/CareerDetails';
-import Quiz from './pages/Quiz';
-import QuizResult from './pages/QuizResult';
-import Resources from './pages/Resources';
-import ResourceDetails from './pages/ResourceDetails';
-import Multimedia from './pages/Multimedia';
-import VideoDetails from './pages/VideoDetails';
-import Admin from './pages/Admin';
-import Bookmarks from './pages/Bookmarks';
-import Feedback from './pages/Feedback';
-import Notifications from './pages/Notifications';
-import SuccessStories from './pages/SuccessStories';
-import StoryDetails from './pages/StoryDetails';
+import Login from './pages/Login';import Register from './pages/Register';import Dashboard from './pages/Dashboard';import Profile from './pages/Profile';import CareerBank from './pages/CareerBank';import CareerDetails from './pages/CareerDetails';import Quiz from './pages/Quiz';import QuizResult from './pages/QuizResult';import Resources from './pages/Resources';import ResourceDetails from './pages/ResourceDetails';import Multimedia from './pages/Multimedia';import VideoDetails from './pages/VideoDetails';import Admin from './pages/Admin';import Bookmarks from './pages/Bookmarks';import Feedback from './pages/Feedback';import Notifications from './pages/Notifications';import SuccessStories from './pages/SuccessStories';import StoryDetails from './pages/StoryDetails';
 
 const Home=()=> <main className="home"><section className="home-hero"><div className="hero-copy"><span className="eyebrow">CAREER PASSPORT · PATHSEEKER</span><h1>Discover the path that <span>fits you.</span></h1><p>Personalized career exploration for students, graduates and professionals. Discover roles, understand your strengths and build a practical next step.</p><div className="hero-actions"><Link className="btn" to="/register">Start your journey <b>→</b></Link><Link className="btn secondary" to="/careers">Explore careers</Link></div><div className="trust-row"><span>✓ Personalized guidance</span><span>✓ Interest-based quiz</span><span>✓ Career resources</span></div></div><div className="hero-panel"><div className="panel-top"><span>YOUR CAREER PASSPORT</span><b>2026</b></div><div className="profile-preview"><div className="avatar">PS</div><div><strong>Your path starts here</strong><span>Explore • Learn • Grow</span></div></div><div className="match-preview"><div><small>CAREER MATCH</small><strong>Software Engineering</strong></div><span>87%</span></div><div className="mini-bars"><i/><i/><i/><i/></div></div></section><section className="home-section"><div className="section-head"><div><span className="eyebrow">HOW IT WORKS</span><h2>A clearer way to choose your next step.</h2></div></div><div className="steps"><div><span>01</span><h3>Discover</h3><p>Tell us about your interests and explore career options that match.</p></div><div><span>02</span><h3>Understand</h3><p>Compare skills, demand, salary and learning paths for each role.</p></div><div><span>03</span><h3>Build</h3><p>Use practical resources and your personalized dashboard to keep moving.</p></div></div></section><section className="home-cta"><div><span className="eyebrow">READY WHEN YOU ARE</span><h2>Your next chapter can start today.</h2></div><Link className="btn" to="/register">Create free account →</Link></section></main>;
 
